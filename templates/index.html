@@ -17,16 +17,38 @@
     </head>
 
     <body>
+        <!--Navbar-->
+        <nav class="navbar navbar-expand-lg navbar-dark primary-color" style="margin-bottom: 2rem;">
+            <!-- Navbar brand -->
+            <a class="navbar-brand" href="#">Interview Academy</a>
+            <!-- Collapse button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Collapsible content -->
+            <!-- Collapsible content -->
+        </nav>
+        <!--/.Navbar-->
         <div class="col-md-6" style="margin: 0 auto;">
             <form method="POST" autocomplete="off" action="{% url 'onsubmit' %}">
                 {% csrf_token %}
-                <div class="form-group">
-                    <label for="title"></label>
-                    <input type="text" name="title" id="title" placeholder="Enter Title..." class="form-control" required="True">
+                <div class="md-form">
+                    <label for="title">Title</label>
+                    <input type="text" name="title" id="title" class="form-control" required="True">
                 </div>
-                <div class="form-group">
-                    <label for="useremail"></label>
-                    <input type="email" name="useremail" id="useremail" placeholder="Enter your email..." class="form-control" required="True">
+                <div class="md-form">
+                    <label for="useremails">Enter Participant Emails (It should comma seperated)</label>
+                    <input type="email" name="useremails" id="useremails"  class="form-control" required="True">
+                </div>
+                <div class="md-form">
+                    <p>Start-Time</p>
+                    <label for="starttime"></label>
+                    <input type="datetime-local" name="starttime" id="starttime" class="form-control" >
+                </div>
+                <div class="md-form">
+                    <p>End-Time</p>
+                    <label for="endtime"></label>
+                    <input type="datetime-local" name="endtime" id="endtime" class="form-control" >
                 </div>
                 <button type="submit" class="btn btn-primary" style="margin: 0 auto;display: block;">Submit</button>
             </form>

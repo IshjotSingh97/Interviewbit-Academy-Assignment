@@ -2,17 +2,13 @@ from django.shortcuts import render
 from django.http import JsonResponse,HttpResponse
 
 
-def testServer(request):
+def testserver(request):
 	return HttpResponse("Sever has started")
 
 def index(request):
 	return render(request,'index.html')
 
-def onSubmit(request):
-	data = {
-	"title" : request.POST["title"],
-	"useremail":request.POST['useremail']
-	}
-	return JsonResponse(data)
+def onsubmit(request):
+	return JsonResponse(request.POST)
 
 # Create your views here.
