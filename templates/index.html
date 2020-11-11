@@ -29,6 +29,11 @@
             <!-- Collapsible content -->
         </nav>
         <!--/.Navbar-->
+        <div class="col-md-6" style="margin-bottom: 2rem;">
+            {% if errormsg %}
+            {{errormsg}}
+            {% endif %}
+        </div>
         <div class="col-md-6" style="margin: 0 auto;">
             <form method="POST" autocomplete="off" action="{% url 'onsubmit' %}">
                 {% csrf_token %}
@@ -38,25 +43,37 @@
                 </div>
                 <div class="md-form">
                     <label for="useremails">Enter Participant Emails (It should comma seperated)</label>
-                    <input type="email" name="useremails" id="useremails"  class="form-control" required="True">
+                    <input type="text" name="useremails" id="useremails" class="form-control" required="True">
                 </div>
                 <div class="md-form">
-                    <p>Date</p>
+                    <p>Date (DD-MM-YYYY)</p>
                     <label for="date"></label>
-                    <input type="date" name="date" id="date" class="form-control" >
+                    <input type="date" name="date" id="date" class="form-control">
                 </div>
                 <div class="md-form">
-                    <p>Start-Time</p>
+                    <p>Start-Time (24 hour Format)</p>
                     <label for="starttime"></label>
-                    <input type="time" name="starttime" id="starttime" class="form-control" >
+                    <input type="time" name="starttime" id="starttime" class="form-control">
                 </div>
                 <div class="md-form">
-                    <p>End-Time</p>
+                    <p>End-Time (24 hour Format)</p>
                     <label for="endtime"></label>
-                    <input type="time" name="endtime" id="endtime" class="form-control" >
+                    <input type="time" name="endtime" id="endtime" class="form-control">
                 </div>
                 <button type="submit" class="btn btn-primary" style="margin: 0 auto;display: block;">Submit</button>
             </form>
+        </div>
+        <hr>
+        <div class="col-md-6">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a>
+                </div>
+            </div>
         </div>
         <!-- JQuery -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
