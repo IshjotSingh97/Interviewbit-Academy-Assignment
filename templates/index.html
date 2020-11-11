@@ -13,14 +13,14 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
         <!-- Material Design Bootstrap -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
-        <title>Register</title>
+        <title>Interviewbit Academy</title>
     </head>
 
     <body>
         <!--Navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark primary-color" style="margin-bottom: 2rem;">
             <!-- Navbar brand -->
-            <a class="navbar-brand" href="#">Interview Academy</a>
+            <a class="navbar-brand" href="#" style="color:white;font-weight:bold;">Interviewbit Academy</a>
             <!-- Collapse button -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -41,14 +41,19 @@
                     <input type="email" name="useremails" id="useremails"  class="form-control" required="True">
                 </div>
                 <div class="md-form">
+                    <p>Date</p>
+                    <label for="date"></label>
+                    <input type="date" name="date" id="date" class="form-control" >
+                </div>
+                <div class="md-form">
                     <p>Start-Time</p>
                     <label for="starttime"></label>
-                    <input type="datetime-local" name="starttime" id="starttime" class="form-control" >
+                    <input type="time" name="starttime" id="starttime" class="form-control" >
                 </div>
                 <div class="md-form">
                     <p>End-Time</p>
                     <label for="endtime"></label>
-                    <input type="datetime-local" name="endtime" id="endtime" class="form-control" >
+                    <input type="time" name="endtime" id="endtime" class="form-control" >
                 </div>
                 <button type="submit" class="btn btn-primary" style="margin: 0 auto;display: block;">Submit</button>
             </form>

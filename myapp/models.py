@@ -6,8 +6,9 @@ class Participant(models.Model):
 
 class Interview(models.Model):
 	title = models.CharField(max_length=30)
-	starttime = DateTimeField()
-	endtime = DateTimeField()
+	date = models.DateField()
+	starttime = models.TimeField()
+	endtime = models.TimeField()
 
 class Schedule(models.Model):
 	participant = models.ForeignKey(Participant,on_delete=models.CASCADE)
