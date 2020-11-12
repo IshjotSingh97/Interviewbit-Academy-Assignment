@@ -32,11 +32,18 @@ def getallinterviews():
 			if object['title'] == interviewtitle:
 				object['participants'].append(participantuseremail)
 
+	tmp=[]
+	for i in jsonArr:
+		if i not in tmp:
+			tmp.append(i)
+	
+	jsonArr.clear()
+	jsonArr.extend(tmp)
+	    
 	return jsonArr
 
 def getallinterviewsapi(request):
 	
-	allinterviews = getallinterviews()
 	
 	data = {
 		"allinterviews" : allinterviews
@@ -49,8 +56,6 @@ def index(request):
 
 	allinterviews = getallinterviews()
 	
-	print(allinterviews)
-
 	data = {
 		"allinterviews" : allinterviews
 	}
@@ -64,6 +69,7 @@ def onsubmit(request):
 	date = request.POST['date']
 	starttime = request.POST['starttime']
 	endtime = request.POST['endtime']
+	flag,msg = isValidSchedule(list(participants),date,starttime,endtime)
 
 	if isValidCount(list(participants)) == False:
 		data = {
@@ -71,9 +77,9 @@ def onsubmit(request):
 		}
 		return render(request,'index.html',context=data)
 	
-	elif isValidSchedule(list(participants),date,starttime,endtime) == False:
+	elif flag == False:
 		data = {
-		"errormsg" : "Confict of schedule"
+		"errormsg" : msg
 		}
 		return render(request,'index.html',context=data)
 
@@ -108,10 +114,19 @@ def onsubmit(request):
 
 def isValidSchedule(currentparticipants,currentdate,currentstarttime,currentendtime):
 	allinterviews = getallinterviews()
-	d = allinterviews
-	del allinterviews
-	print(d)
-	return True
+
+	for interview in allinterviews:
+		print(interview['date'],currentdate)
+		if interview['date'] == currentdate:
+			for currentparticipant in currentparticipants:
+				for participant in interview['participants']:
+					if currentparticipant == participant:
+						print(currentparticipant)
+						if abs(currentstarttime-interview['endtime']) <= 1 or abs(currentstarttime-interview['endtime']):
+							errormsg = "{} has already an interview scheduled at {} on {}".format(participant,interview['endtime'],interview['date'])
+							return (False,errormsg)
+
+	return (True,"")
 
 def isValidCount(participants):
 	if len(participants) < 2:
