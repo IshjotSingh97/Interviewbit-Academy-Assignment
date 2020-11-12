@@ -2,15 +2,12 @@ from django.shortcuts import render
 from django.http import JsonResponse,HttpResponse
 from datetime import datetime
 from .models import *
-from collections import defaultdict
+import collections
 
 def testserver(request):
 	return HttpResponse("Sever has started successfully")
 
 def index(request):
-	return render(request,'index.html')
-
-def onsubmit(request):
 
 	participants = request.POST['useremails'].split(',')
 
@@ -19,6 +16,69 @@ def onsubmit(request):
 		"errormsg" : "Number of participants are less than 2"
 		}
 		return render(request,'index.html',context=data)
+
+	
+	allinterviewsjson = d
+	del d
+
+	data = {
+		"allinterviews" : allinterviewjson
+	}
+	return render(request,'index.html',context=data)
+
+def getallinterviewsapi(request):
+	
+	d = collections.defaultdict(lambda : collections.defaultdict())
+
+	for schedule in Schedule.objects.all():
+		interview = Interview.objects.get(id=schedule.interview_id)
+		title = interview.title
+		starttime = interview.starttime
+		endtime = interview.endtime
+		d[title]["starttime"] = starttime
+		d[title]["endtime"] = endtime
+		d[title]["participants"] = []
+		
+	for schedule in Schedule.objects.all():
+		interview = Interview.objects.get(id=schedule.interview_id)
+		participant = Participant.objects.get(id=schedule.participant_id)
+		d[interview.title]["participants"].append(participant.useremail)
+
+	allinterviewsdict = d
+	del d
+
+	data = {
+	"allinterviews" : allinterviewsdict
+	}
+
+	return JsonResponse(data) 
+
+def getallinterviews():
+	
+	d = collections.defaultdict(lambda : collections.defaultdict())
+
+	for schedule in Schedule.objects.all():
+		interview = Interview.objects.get(id=schedule.interview_id)
+		title = interview.title
+		starttime = interview.starttime
+		endtime = interview.endtime
+		d[title]["starttime"] = starttime
+		d[title]["endtime"] = endtime
+		d[title]["participants"] = []
+		
+	for schedule in Schedule.objects.all():
+		interview = Interview.objects.get(id=schedule.interview_id)
+		participant = Participant.objects.get(id=schedule.participant_id)
+		d[interview.title]["participants"].append(participant.useremail)
+
+	allinterviewsdict = d
+	del d
+
+	return allinterviewsdict 
+
+def onsubmit(request):
+
+	
 	
 	# logic for interview
 	interview = Interview()
@@ -43,14 +103,15 @@ def onsubmit(request):
 	d = collections.defaultdict(lambda : [])
 
 	for schedule in Schedule.objects.all():
-		key = Interview.objects.get(id=schedule.interview_id)
-		value = Participant.objects.get(id=schedule.participant_id)
+		key = Interview.objects.get(id=schedule.interview_id).title
+		value = Participant.objects.get(id=schedule.participant_id).useremail
 		d[key].append(value)
 
 	data = {
 		"d" : d
 	}
 	
+	return JsonResponse(data)
 	return render(request,'index.html',context=data)
 	
 
