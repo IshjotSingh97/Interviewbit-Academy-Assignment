@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse,HttpResponse
-from datetime import datetime
+from datetime import *
 from .models import *
 import collections
 
@@ -39,7 +39,7 @@ def getallinterviews():
 	
 	jsonArr.clear()
 	jsonArr.extend(tmp)
-	    
+
 	return jsonArr
 
 def getallinterviewsapi(request):
@@ -116,14 +116,35 @@ def isValidSchedule(currentparticipants,currentdate,currentstarttime,currentendt
 	allinterviews = getallinterviews()
 
 	for interview in allinterviews:
-		print(interview['date'],currentdate)
-		if interview['date'] == currentdate:
+		interview['date'] = interview['date'].strftime('%Y-%m-%d')
+		d1 = interview['date']
+		d2 = currentdate
+		if d1 == d2:
+			print("DATE EQUAL")
 			for currentparticipant in currentparticipants:
 				for participant in interview['participants']:
 					if currentparticipant == participant:
-						print(currentparticipant)
-						if abs(currentstarttime-interview['endtime']) <= 1 or abs(currentstarttime-interview['endtime']):
-							errormsg = "{} has already an interview scheduled at {} on {}".format(participant,interview['endtime'],interview['date'])
+						t1 = interview['starttime']
+						t2 = interview['endtime']
+						t3 = datetime.strptime(currentstarttime, '%H:%M').time()
+						t4 = datetime.strptime(currentendtime, '%H:%M').time()
+						# Create datetime objects for each time (a and b)
+						dateTimeA = datetime.combine(date.today(), t1)
+						dateTimeB = datetime.combine(date.today(), t4)
+						# Get the difference between datetimes (as timedelta)
+						dateTimeDifference = abs(dateTimeA - dateTimeB)
+						# Divide difference in seconds by number of seconds in hour (3600)  
+						dateTimeDifferenceInHours1 = dateTimeDifference.total_seconds() / 3600
+						
+						dateTimeA = datetime.combine(date.today(), t3)
+						dateTimeB = datetime.combine(date.today(), t4)
+						# Get the difference between datetimes (as timedelta)
+						dateTimeDifference = abs(dateTimeA - dateTimeB)
+						# Divide difference in seconds by number of seconds in hour (3600)  
+						dateTimeDifferenceInHours2 = dateTimeDifference.total_seconds() / 3600
+				
+						if dateTimeDifferenceInHours1 <= 1 or dateTimeDifferenceInHours2 <= 2:
+							errormsg = "{} has al`ready an interview scheduled on {} between {}".format(participant,d1,t1,t2)
 							return (False,errormsg)
 
 	return (True,"")
