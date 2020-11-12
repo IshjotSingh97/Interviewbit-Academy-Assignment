@@ -189,3 +189,6 @@ def deleteinterview(request,title):
 	"successmsg" : "Interview schedule deleted successfully" 
 	}
 	return render('index.html',context=data)
+
+def updateinterview(request):
+	return render('update.html',context=data)
