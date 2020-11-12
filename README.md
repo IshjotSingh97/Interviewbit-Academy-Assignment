@@ -5,6 +5,8 @@
 <h6>Heroku Link</h6>
 https://interviewbit-academy-ishjot.herokuapp.com/
 
+<h6>Github Link</h6>
+https://github.com/IshjotSingh97/Interviewbit-Academy-Assignment
 
 
 
