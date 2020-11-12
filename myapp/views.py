@@ -144,7 +144,7 @@ def isValidSchedule(currentparticipants,currentdate,currentstarttime,currentendt
 						dateTimeDifferenceInHours2 = dateTimeDifference.total_seconds() / 3600
 				
 						if dateTimeDifferenceInHours1 <= 1 or dateTimeDifferenceInHours2 <= 2:
-							errormsg = "{} has al`ready an interview scheduled on {} between {}".format(participant,d1,t1,t2)
+							errormsg = "{} has already an interview scheduled on {} between {} and {}".format(participant,d1,t1,t2)
 							return (False,errormsg)
 
 	return (True,"")
