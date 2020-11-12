@@ -29,9 +29,9 @@
             <!-- Collapsible content -->
         </nav>
         <!--/.Navbar-->
-        <div class="col-md-6" style="margin-bottom: 2rem;">
+        <div class="col-md-6" style="margin-bottom: 0 2rem;">
             {% if errormsg %}
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin: 0 auto;">
                 <strong>{{errormsg}}</strong>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -39,8 +39,8 @@
             </div>
             {% endif %}
             {% if successmsg %}
-               <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>{{successrmsg}}</strong>
+            <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin: 0 auto;">
+                <strong>{{successmsg}}</strong>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -77,19 +77,28 @@
             </form>
         </div>
         <hr>
-        <div class="col-md-6">
-            <div class="card" style="width: 18rem;">
-                {% for i in d %}
-                {{i}}
-                {% endfor %}
+        <div class="col-md-6" style="margin: 0 auto;">
+            {% for interview in allinterviews %}
+            <div class="card" style="width: 25rem;margin: 2rem auto;">
                 <div class="card-body">
-                    <h5 class="card-title">{{i}}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
+                    <h5 class="card-title">{{interview.title}}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Participants</h6>
+                    <ol>
+                    {% for participant in interview.participants %}
+                        <li>{{participant}}</li>
+                    {% endfor %}
+                    </ol>
+                    <a href="#" class="card-link">Date: {{interview.date}}</a>
+                    <br>
+                    <a href="#" class="card-link">Startime: {{interview.starttime}}</a>
+                    <br>
+                    <a href="#" class="card-link">Endtime: {{interview.endtime}}</a>
+                    <br>
                 </div>
             </div>
+            <hr>
+            {% endfor %}
+
         </div>
         <!-- JQuery -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

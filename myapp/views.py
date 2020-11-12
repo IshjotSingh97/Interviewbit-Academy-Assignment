@@ -9,26 +9,30 @@ def testserver(request):
 
 def getallinterviews():
 	
-	d = collections.defaultdict(lambda : collections.defaultdict())
+	jsonArr = []
 
 	for schedule in Schedule.objects.all():
+		d = {}
+		d["participants"] = []
 		interview = Interview.objects.get(id=schedule.interview_id)
 		title = interview.title
+		date = interview.date
 		starttime = interview.starttime
 		endtime = interview.endtime
-		d[title]["starttime"] = starttime
-		d[title]["endtime"] = endtime
-		d[title]["participants"] = []
+		d["title"] = title
+		d["date"] = date
+		d["starttime"] = starttime
+		d["endtime"] = endtime
+		jsonArr.append(d)
 		
 	for schedule in Schedule.objects.all():
-		interview = Interview.objects.get(id=schedule.interview_id)
-		participant = Participant.objects.get(id=schedule.participant_id)
-		d[interview.title]["participants"].append(participant.useremail)
+		interviewtitle = Interview.objects.get(id=schedule.interview_id).title
+		participantuseremail = Participant.objects.get(id=schedule.participant_id).useremail
+		for object in jsonArr:
+			if object['title'] == interviewtitle:
+				object['participants'].append(participantuseremail)
 
-	allinterviewsdict = d
-	del d
-
-	return allinterviewsdict
+	return jsonArr
 
 def getallinterviewsapi(request):
 	
@@ -45,6 +49,8 @@ def index(request):
 
 	allinterviews = getallinterviews()
 	
+	print(allinterviews)
+
 	data = {
 		"allinterviews" : allinterviews
 	}
@@ -55,6 +61,9 @@ def index(request):
 def onsubmit(request):
 
 	participants = request.POST['useremails'].split(',')
+	date = request.POST['date']
+	starttime = request.POST['starttime']
+	endtime = request.POST['endtime']
 
 	if isValidCount(list(participants)) == False:
 		data = {
@@ -62,7 +71,7 @@ def onsubmit(request):
 		}
 		return render(request,'index.html',context=data)
 	
-	elif isValidSchedule(list(participants)) == False:
+	elif isValidSchedule(list(participants),date,starttime,endtime) == False:
 		data = {
 		"errormsg" : "Confict of schedule"
 		}
@@ -88,22 +97,21 @@ def onsubmit(request):
 		schedule.interview_id = interview.id
 		schedule.save()
 
-	
-
 	successmsg = "Interview scheduled successfully"
-	
+	allinterviews = getallinterviews()
 	data = {
 		"allinterviews" : allinterviews,
 		"successmsg" : successmsg
 	}
-
-	allinterviews = getallinterviews()
-
-	
-	return JsonResponse(data)
 	return render(request,'index.html',context=data)
 	
 
+def isValidSchedule(currentparticipants,currentdate,currentstarttime,currentendtime):
+	allinterviews = getallinterviews()
+	d = allinterviews
+	del allinterviews
+	print(d)
+	return True
 
 def isValidCount(participants):
 	if len(participants) < 2:
