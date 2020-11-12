@@ -67,11 +67,14 @@ def index(request):
 def onsubmit(request):
 
 	participants = request.POST['useremails'].split(',')
+	allinterviews = getallinterviews()
+
 
 	if isValidEmail(participants):
 		pass
 	else:
 		data = {
+		"allinterviews" : allinterviews,
 		"errormsg" : "Only comma seperated emails allowed"
 		}
 		return render(request,'index.html',context=data)
@@ -82,6 +85,7 @@ def onsubmit(request):
 
 	if starttime > endtime:
 		data = {
+		"allinterviews" : allinterviews,
 		"errormsg" : "Start time {} is greater than End time {}".format(starttime,endtime)
 		}
 		return render(request,'index.html',context=data)
@@ -90,12 +94,14 @@ def onsubmit(request):
 
 	if isValidCount(list(participants)) == False:
 		data = {
+		"allinterviews" : allinterviews,
 		"errormsg" : "Number of participants are less than 2"
 		}
 		return render(request,'index.html',context=data)
 	
 	elif flag == False:
 		data = {
+		"allinterviews" : allinterviews,
 		"errormsg" : msg
 		}
 		return render(request,'index.html',context=data)
@@ -121,7 +127,6 @@ def onsubmit(request):
 		schedule.save()
 
 	successmsg = "Interview scheduled successfully"
-	allinterviews = getallinterviews()
 	data = {
 		"allinterviews" : allinterviews,
 		"successmsg" : successmsg

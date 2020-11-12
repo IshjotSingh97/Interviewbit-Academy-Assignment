@@ -30,20 +30,20 @@ https://github.com/IshjotSingh97/Interviewbit-Academy-Assignment
 <img src="/appscreenshots/1.PNG">
 <hr>
 <p>2</p>
-<img src="/appscreenshots/2.png">
+<img src="/appscreenshots/2.PNG">
 <hr>
 <p>3</p>
-<img src="/appscreenshots/3.png">
+<img src="/appscreenshots/3.PNG">
 <hr>
 <p>4</p>
-<img src="/appscreenshots/4.png">
+<img src="/appscreenshots/4.PNG">
 <hr>
 <p>5</p>
-<img src="/appscreenshots/5.png">
+<img src="/appscreenshots/5.PNG">
 <hr>
 <p>6</p>
-<img src="/appscreenshots/6.png">
+<img src="/appscreenshots/6.PNG">
 <hr>
 <p>7</p>
-<img src="/appscreenshots/7.png">
+<img src="/appscreenshots/7.PNG">
 <hr>
