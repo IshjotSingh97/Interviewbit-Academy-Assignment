@@ -13,6 +13,8 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
         <!-- Material Design Bootstrap -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+        <link rel="icon" href="https://ibassets.s3.amazonaws.com/static-assets/ib-logo-square.png" type="image/gif" sizes="16x16">
         <title>Interviewbit Academy</title>
     </head>
 
@@ -29,6 +31,10 @@
             <!-- Collapsible content -->
         </nav>
         <!--/.Navbar-->
+        <div class="col-md-6" style="margin: 0 auto;">
+            <img class="img-fluid" src="https://ibassets.s3.amazonaws.com/static-assets/ib-logo-square.png" style="margin: 0 auto;display: block;height: 10rem;">
+            
+        </div>
         <div class="col-md-6" style="margin: 0 auto;">
             {% if errormsg %}
             <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin: 0 auto;">
@@ -48,7 +54,7 @@
             {% endif %}
         </div>
         <div class="col-md-6" style="margin: 0 auto;">
-            <form method="POST" autocomplete="off" action="{% url 'onsubmit' %}">
+            <form method="POST" autocomplete="off" action="{% url 'onsubmit' %}"  @submit="checkForm">
                 {% csrf_token %}
                 <div class="md-form">
                     <label for="title">Title</label>
@@ -96,7 +102,7 @@
                     <br>
                 </div>
                 <a class="class btn btn-danger" href="/deleteinterview/{{interview.title}}">Delete</a>
-                <a class="class btn btn-warning" href="/updateinterview/{{interview.title}}">Update</a>
+                <a class="class btn btn-warning" href="/updateinterview/{{interview.title}}">Reschedule</a>
 
             </div>
             <hr>

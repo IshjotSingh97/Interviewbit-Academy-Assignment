@@ -7,5 +7,6 @@ urlpatterns = [
 	path('',views.index,name='index'),
 	path('onsubmit',views.onsubmit,name='onsubmit'),
 	path('getallinterviewsapi',views.getallinterviewsapi,name='getallinterviewsapi'),
-	path('deleteinterview/<str:title>',views.deleteinterview,name='deleteinterview')
+	path('deleteinterview/<str:title>',views.deleteinterview,name='deleteinterview'),
+	path('updateinterview/<str:title>',views.updateinterview,name='updateinterview')
 ]

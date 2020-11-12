@@ -72,7 +72,7 @@ def onsubmit(request):
 		pass
 	else:
 		data = {
-		"errormsg" : "Only emails allowed"
+		"errormsg" : "Only comma seperated emails allowed"
 		}
 		return render(request,'index.html',context=data)
 
@@ -82,7 +82,7 @@ def onsubmit(request):
 
 	if starttime > endtime:
 		data = {
-		"errormsg" : "Startime {} is greater than Endtime {}".format(starttime,endtime)
+		"errormsg" : "Start time {} is greater than End time {}".format(starttime,endtime)
 		}
 		return render(request,'index.html',context=data)
 
@@ -190,5 +190,18 @@ def deleteinterview(request,title):
 	}
 	return render('index.html',context=data)
 
-def updateinterview(request):
-	return render('update.html',context=data)
+def updateinterview(request,title):
+	interview = Interview.objects.get(title=title)
+	schedules = Schedule.objects.filter(interview_id=interview.id)
+	participants = []
+	for schedule in schedules:
+		participant = Participant.objects.get(id=schedule.id)
+		participants.append(participant.useremail)
+	data = {
+	"title" : title,
+	"starttime" : interview.starttime,
+	"date" : interview.date,
+	"endtime" : interview.endtime,
+	"participants" : ",".join(participants)
+	}
+	return render(request,'update.html',context=data)
