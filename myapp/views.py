@@ -67,6 +67,7 @@ def index(request):
 def onsubmit(request):
 
 	participants = request.POST['useremails'].split(',')
+
 	allinterviews = getallinterviews()
 
 
@@ -126,7 +127,9 @@ def onsubmit(request):
 		schedule.interview_id = interview.id
 		schedule.save()
 
+	allinterviews = getallinterviews()
 	successmsg = "Interview scheduled successfully"
+	
 	data = {
 		"allinterviews" : allinterviews,
 		"successmsg" : successmsg
