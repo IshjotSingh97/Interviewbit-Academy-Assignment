@@ -27,7 +27,7 @@ https://github.com/IshjotSingh97/Interviewbit-Academy-Assignment
 
 <h6>App Screenshots</h6>
 <p>1</p>
-<img src="/appscreenshots/1.png">
+<img src="/appscreenshots/1.PNG">
 <hr>
 <p>2</p>
 <img src="/appscreenshots/2.png">
