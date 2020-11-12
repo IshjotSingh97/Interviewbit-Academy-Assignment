@@ -20,7 +20,7 @@
         <!--Navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark primary-color" style="margin-bottom: 2rem;">
             <!-- Navbar brand -->
-            <a class="navbar-brand" href="#" style="color:white;font-weight:bold;">Interviewbit Academy</a>
+            <a class="navbar-brand" href="#" style="color:white;font-weight:bold;margin: 0 auto">Interviewbit Academy Scheduler</a>
             <!-- Collapse button -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -95,6 +95,7 @@
                     <a href="#" class="card-link">Endtime: {{interview.endtime}}</a>
                     <br>
                 </div>
+                <a class="class btn btn-danger" href="/deleteinterview/{{interview.title}}">Delete</a>
             </div>
             <hr>
             {% endfor %}

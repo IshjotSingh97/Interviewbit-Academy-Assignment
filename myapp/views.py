@@ -3,6 +3,7 @@ from django.http import JsonResponse,HttpResponse
 from datetime import *
 from .models import *
 import collections
+import re
 
 def testserver(request):
 	return HttpResponse("Sever has started successfully")
@@ -66,9 +67,25 @@ def index(request):
 def onsubmit(request):
 
 	participants = request.POST['useremails'].split(',')
+
+	if isValidEmail(participants):
+		pass
+	else:
+		data = {
+		"errormsg" : "Only emails allowed"
+		}
+		return render(request,'index.html',context=data)
+
 	date = request.POST['date']
 	starttime = request.POST['starttime']
 	endtime = request.POST['endtime']
+
+	if starttime > endtime:
+		data = {
+		"errormsg" : "Startime {} is greater than Endtime {}".format(starttime,endtime)
+		}
+		return render(request,'index.html',context=data)
+
 	flag,msg = isValidSchedule(list(participants),date,starttime,endtime)
 
 	if isValidCount(list(participants)) == False:
@@ -120,7 +137,6 @@ def isValidSchedule(currentparticipants,currentdate,currentstarttime,currentendt
 		d1 = interview['date']
 		d2 = currentdate
 		if d1 == d2:
-			print("DATE EQUAL")
 			for currentparticipant in currentparticipants:
 				for participant in interview['participants']:
 					if currentparticipant == participant:
@@ -155,4 +171,21 @@ def isValidCount(participants):
 	else:
 		return True
 
-# Create your views here.
+
+def isValidEmail(participants):
+	regex = "^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$"
+	for email in participants:
+		if not re.search(regex,email):
+			return False
+	return True
+
+def deleteinterview(request,title):
+	interview = Interview.objects.get(title=title)
+	schedule = Schedule.objects.filter(interview_id=interview.id)
+	print(interview,schedule)
+	interview.delete()
+	schedule.delete()
+	data = {
+	"successmsg" : "Interview schedule deleted successfully" 
+	}
+	return render('index.html',context=data)
