@@ -180,28 +180,41 @@ def isValidEmail(participants):
 	return True
 
 def deleteinterview(request,title):
+	title = str(title)
 	interview = Interview.objects.get(title=title)
-	schedule = Schedule.objects.filter(interview_id=interview.id)
-	print(interview,schedule)
+	schedules = Schedule.objects.filter(interview_id=interview.id)
 	interview.delete()
-	schedule.delete()
+	schedules.delete()
+
+	allinterviews = getallinterviews()
+	
 	data = {
-	"successmsg" : "Interview schedule deleted successfully" 
+		"allinterviews" : allinterviews,
+		"successmsg" : "Interview schedule deleted successfully" 
 	}
-	return render('index.html',context=data)
+	return render(request,'index.html',context=data)
 
 def updateinterview(request,title):
+	title = str(title)
 	interview = Interview.objects.get(title=title)
 	schedules = Schedule.objects.filter(interview_id=interview.id)
 	participants = []
 	for schedule in schedules:
 		participant = Participant.objects.get(id=schedule.id)
 		participants.append(participant.useremail)
+	
+	allinterviews = getallinterviews()
+
 	data = {
 	"title" : title,
 	"starttime" : interview.starttime,
 	"date" : interview.date,
 	"endtime" : interview.endtime,
-	"participants" : ",".join(participants)
+	"participants" : ",".join(participants),
+	"allinterviews" : allinterviews,
+	"successmsg" : "Interview rescheduled successfully" 
 	}
+
+	interview.delete()
+	schedules.delete()
 	return render(request,'update.html',context=data)

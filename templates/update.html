@@ -19,7 +19,6 @@
     </head>
 
     <body>
-        {{date}}
         <!--Navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark primary-color" style="margin-bottom: 2rem;">
             <!-- Navbar brand -->
@@ -32,6 +31,9 @@
             <!-- Collapsible content -->
         </nav>
         <!--/.Navbar-->
+        <div class="col-md-6" style="margin: 0 auto;">
+            <img class="img-fluid" src="https://ibassets.s3.amazonaws.com/static-assets/ib-logo-square.png" style="margin: 0 auto;display: block;height: 10rem;">
+        </div>
         <div class="col-md-6" style="margin: 0 auto;">
             {% if errormsg %}
             <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin: 0 auto;">
@@ -59,7 +61,7 @@
                 </div>
                 <div class="md-form">
                     <label for="useremails">Enter Participant Emails (It should comma seperated)</label>
-                    <input type="text" name="useremails" id="useremails" class="form-control" required="True" value="{{participants}}" >
+                    <input type="text" name="useremails" id="useremails" class="form-control" required="True" value="{{participants}}">
                 </div>
                 <div class="md-form">
                     <p>Date (DD-MM-YYYY)</p>
