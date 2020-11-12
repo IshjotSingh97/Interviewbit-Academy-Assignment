@@ -7,52 +7,6 @@ import collections
 def testserver(request):
 	return HttpResponse("Sever has started successfully")
 
-def index(request):
-
-	participants = request.POST['useremails'].split(',')
-
-	if isValidCount(list(participants)) == False:
-		data = {
-		"errormsg" : "Number of participants are less than 2"
-		}
-		return render(request,'index.html',context=data)
-
-	
-	allinterviewsjson = d
-	del d
-
-	data = {
-		"allinterviews" : allinterviewjson
-	}
-	return render(request,'index.html',context=data)
-
-def getallinterviewsapi(request):
-	
-	d = collections.defaultdict(lambda : collections.defaultdict())
-
-	for schedule in Schedule.objects.all():
-		interview = Interview.objects.get(id=schedule.interview_id)
-		title = interview.title
-		starttime = interview.starttime
-		endtime = interview.endtime
-		d[title]["starttime"] = starttime
-		d[title]["endtime"] = endtime
-		d[title]["participants"] = []
-		
-	for schedule in Schedule.objects.all():
-		interview = Interview.objects.get(id=schedule.interview_id)
-		participant = Participant.objects.get(id=schedule.participant_id)
-		d[interview.title]["participants"].append(participant.useremail)
-
-	allinterviewsdict = d
-	del d
-
-	data = {
-	"allinterviews" : allinterviewsdict
-	}
-
-	return JsonResponse(data) 
-
 def getallinterviews():
 	
 	d = collections.defaultdict(lambda : collections.defaultdict())
@@ -74,12 +28,46 @@ def getallinterviews():
 	allinterviewsdict = d
 	del d
 
-	return allinterviewsdict 
+	return allinterviewsdict
+
+def getallinterviewsapi(request):
+	
+	allinterviews = getallinterviews()
+	
+	data = {
+		"allinterviews" : allinterviews
+	}
+
+	return JsonResponse(data) 
+
+
+def index(request):
+
+	allinterviews = getallinterviews()
+	
+	data = {
+		"allinterviews" : allinterviews
+	}
+
+	return render(request,'index.html',context=data)
+
 
 def onsubmit(request):
 
+	participants = request.POST['useremails'].split(',')
+
+	if isValidCount(list(participants)) == False:
+		data = {
+		"errormsg" : "Number of participants are less than 2"
+		}
+		return render(request,'index.html',context=data)
 	
-	
+	elif isValidSchedule(list(participants)) == False:
+		data = {
+		"errormsg" : "Confict of schedule"
+		}
+		return render(request,'index.html',context=data)
+
 	# logic for interview
 	interview = Interview()
 	interview.title = request.POST['title']
@@ -100,16 +88,17 @@ def onsubmit(request):
 		schedule.interview_id = interview.id
 		schedule.save()
 
-	d = collections.defaultdict(lambda : [])
+	
 
-	for schedule in Schedule.objects.all():
-		key = Interview.objects.get(id=schedule.interview_id).title
-		value = Participant.objects.get(id=schedule.participant_id).useremail
-		d[key].append(value)
-
+	successmsg = "Interview scheduled successfully"
+	
 	data = {
-		"d" : d
+		"allinterviews" : allinterviews,
+		"successmsg" : successmsg
 	}
+
+	allinterviews = getallinterviews()
+
 	
 	return JsonResponse(data)
 	return render(request,'index.html',context=data)

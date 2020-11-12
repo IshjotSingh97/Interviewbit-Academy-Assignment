@@ -17,7 +17,6 @@
     </head>
 
     <body>
-        {{d}}
         <!--Navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark primary-color" style="margin-bottom: 2rem;">
             <!-- Navbar brand -->
@@ -32,7 +31,20 @@
         <!--/.Navbar-->
         <div class="col-md-6" style="margin-bottom: 2rem;">
             {% if errormsg %}
-            {{errormsg}}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{errormsg}}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endif %}
+            {% if successmsg %}
+               <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{successrmsg}}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             {% endif %}
         </div>
         <div class="col-md-6" style="margin: 0 auto;">
@@ -68,7 +80,7 @@
         <div class="col-md-6">
             <div class="card" style="width: 18rem;">
                 {% for i in d %}
-                {{i}} 
+                {{i}}
                 {% endfor %}
                 <div class="card-body">
                     <h5 class="card-title">{{i}}</h5>
